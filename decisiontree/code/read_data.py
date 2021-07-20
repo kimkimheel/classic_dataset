@@ -8,8 +8,7 @@ plt.rcParams["font.sans-serif"]="SimHei"     #解决中文乱码问题
 plt.rcParams["axes.unicode_minus"] = False
 
 
-full_data = pd.read_csv(r"C:\Users\EDZ\Desktop\decisiontree\titanic\train.csv")
-
+full_data = pd.read_csv(r"C:\Users\EDZ\Desktop\classic_dataset\decisiontree\titanic\train.csv")
 # Store the 'Survived' feature in a new variable and remove it from the dataset
 outcomes = full_data['Survived']
 features_raw = full_data.drop('Survived', axis = 1)
@@ -22,7 +21,7 @@ survived_count = outcomes.value_counts()  # !!! important
 
 
 fig1 = plt.figure(figsize=(6,6))
-plt.pie(list(survived_count),labels=['未存活','存活'],autopct='%1.1f%%',startangle=100)
+plt.pie(list(survived_count),labels=['unsurvived','survived'],autopct='%1.1f%%',startangle=100)
 # fig1.show()
 
 # # 每一个特征对存活的影响
@@ -78,5 +77,22 @@ sns.set_theme(style='whitegrid')
 sns.countplot(x=full_data.fellow, hue=full_data.Survived, palette='Blues')
 # fig9.show()
 
-plt.show()
-# input()
+# 多变量绘图
+# 登陆地、票价和存活情况之间的关系
+fig10 = plt.figure(figsize=(10,10))
+sns.set_theme(style='whitegrid')
+sns.stripplot(y=full_data.Fare, x = full_data.Embarked, hue = full_data.Survived, palette='RdYlBu_r',jitter=0.3,
+              linewidth=0.1,size=5)
+
+
+# 阶级、票价和存活情况之间的关系
+fig11 = plt.figure(figsize=(10,10))
+sns.set_theme(style='whitegrid')
+sns.stripplot(y=full_data.Fare, x = full_data.Pclass, hue = full_data.Survived, palette='RdYlBu_r',jitter=0.3,
+              linewidth=0.1,size=5)
+
+
+
+
+
+
