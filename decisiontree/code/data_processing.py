@@ -57,3 +57,6 @@ data_final = data_need[features]
 train_features = pd.get_dummies(data_final)
 
 train_labels = data_need['Survived']
+
+train_features.to_csv(r"C:\Users\EDZ\Desktop\classic_dataset\decisiontree\titanic\feature_df.csv", index=False)
+train_labels.to_csv(r"C:\Users\EDZ\Desktop\classic_dataset\decisiontree\titanic\train_label.csv", index=False)
