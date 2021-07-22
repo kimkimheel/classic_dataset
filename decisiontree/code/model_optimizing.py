@@ -39,3 +39,33 @@ print('The training accuracy is', accuracy_score(best_train_prediction,y_train))
 
 print('The test accuracy is',accuracy_score(best_test_prediction,y_test))
 
+# ----------------draw the final tree --------------------------------
+import graphviz
+from sklearn import tree
+from subprocess import check_call
+from PIL import Image, ImageDraw, ImageFont
+from IPython.display import Image as PImage
+
+with open("tree1.dot", 'w') as f:
+    f = tree.export_graphviz(best_fit,
+                             out_file=f,
+                             max_depth=8,
+                             impurity=True,
+                             feature_names=list(features),
+                             class_names=['Died', 'Survived'],
+                             rounded=True,
+                             filled=True)
+
+# Convert .dot to .png to allow display in web notebook
+check_call(['dot', '-Tpng', 'tree1.dot', '-o', 'tree1.png'])
+
+# Annotating chart with PIL
+img = Image.open("tree1.png")
+draw = ImageDraw.Draw(img)
+font = ImageFont.truetype(r'C:\Users\EDZ\Anaconda3\Lib\site-packages\matplotlib\mpl-data\fonts\ttf\cmtt10.ttf', 26)
+draw.text((10, 0),  # Drawing offset (position)
+          '"Title <= 1.5" corresponds to "Mr." title',  # Text to draw
+          (0, 0, 255),  # RGB desired color
+          font=font)  # ImageFont object with desired font
+img.save('sample-out.png')
+PImage("sample-out.png")
